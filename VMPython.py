@@ -37,6 +37,10 @@ class Commands:
     FOR = 'FOR'
     #done
     LOOP_END = 'LOOP_END'
+
+    FUNCTION = 'FUNCTION' #define a function with parameters
+
+    CALL = 'CALL' #call a defined function with arguments
     
 class VMPython:
     def execute():
@@ -367,10 +371,7 @@ class VMPython:
                         # done
                         LoopStack.pop()
                         ip += 1
-                else:
-                    # unknown context type; pop and continue
-                    LoopStack.pop()
-                    ip += 1
+
             else:
                 # unknown instruction: skip
                 ip += 1
