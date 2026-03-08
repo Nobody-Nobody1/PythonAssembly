@@ -1,2 +1,0 @@
-('C:\\Users\\bibha\\Documents\\GitHub\\Programming-Language-Concept\\build\\Tkinter\\PYZ-00.pyz',
- [])
