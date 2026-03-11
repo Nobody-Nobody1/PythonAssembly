@@ -6,3 +6,4 @@ print i
 loop_end
 store R1 10
 decimal_convert R1 binary
+print R1

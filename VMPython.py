@@ -378,7 +378,7 @@ class VMPython:
                 if target_type.upper == 'BINARY':
                     try:
                         int_val = int(val)
-                        Registers[reg] = bin(int_val)
+                        Registers.update({reg: bin(int_val)})
                     except:
                         # if conversion fails, store error message or original value
                         Registers[reg] = "ERROR: Cannot convert {} to binary".format(val)
@@ -386,7 +386,7 @@ class VMPython:
                 elif target_type.upper == 'HEX':
                     try:
                         int_val = int(val)
-                        Registers[reg] = hex(int_val)
+                        Registers.update({reg: hex(int_val)})
                     except:
                         Registers[reg] = "ERROR: Cannot convert {} to hexadecimal".format(val)
                 else:
