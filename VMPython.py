@@ -1,3 +1,5 @@
+from sqlite3 import Binary
+
 from ByteCodeReader import Reader
 import Library
 
@@ -44,7 +46,7 @@ class Commands:
 class VMPython:
     def execute():
 
-        Registers = {'CompareFlag': 0, 'LOGIC_FLAG': False, 'BINARY_FLAG': '', 'HEX_FLAG': ''}  # Initialize flags for usage
+        Registers = {'COMPAREFLAG': 0, 'LOGIC_FLAG': False, 'BINARY_FLAG': 0, 'HEX_FLAG': 0}  # Initialize flags for usage
         Markers = {}  # To store marked positions for jumps
         LoopStack = []  # Stack for loop/if contexts
 
@@ -200,13 +202,13 @@ class VMPython:
                 value1 = int(instruction[1])
                 value2 = int(instruction[2])
                 # simple comparison result stored in CompareFlag (0 false, 1 true)
-                Registers['CompareFlag'] = 1 if value1 == value2 else 0
+                Registers['COMPAREFLAG'] = 1 if value1 == value2 else 0
                 ip += 1
 
             elif instruction_name == Commands.COMPARE_REGISTER:
                 value1 = int(Registers.get(instruction[1]))
                 value2 = int(Registers.get(instruction[2]))
-                Registers['CompareFlag'] = 1 if value1 == value2 else 0
+                Registers['COMPAREFLAG'] = 1 if value1 == value2 else 0
                 ip += 1
 
             elif instruction_name == Commands.LOGICAL_OPERATIONS:
@@ -377,17 +379,17 @@ class VMPython:
                 if target_type.upper == 'BINARY':
                     try:
                         int_val = int(val)
-                        target_reg = 'BINARY_FLAG'  # store in a special register for access
-                        Registers.update({target_reg: bin(int_val)})
+                        binary = bin(int_val)
+                        Registers.update({'BINARY_FLAG': binary})
                     except:
                         # if conversion fails, store error message or original value
                         print("ERROR: Cannot convert to binary")
                 
-                elif target_type.upper == 'HEX':
+                elif target_type.upper == 'HEXADECIMAL':
                     try:
-                        target_reg = 'HEX_FLAG'  # store in a special register for access
                         int_val = int(val)
-                        Registers.update({target_reg: hex(int_val)})
+                        hexadecimal = hex(int_val)
+                        Registers.update({'HEX_FLAG': hexadecimal})
                     except:
                         print("ERROR: Cannot convert to hexadecimal")
                 else:
