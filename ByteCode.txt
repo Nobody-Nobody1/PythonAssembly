@@ -6,4 +6,6 @@ print i
 loop_end
 store R1 10
 decimal_convert R1 binary
+decimal_convert R1 hexadecimal
 print BINARY_FLAG
+print HEXADECIMAL_FLAG

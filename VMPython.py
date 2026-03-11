@@ -26,27 +26,27 @@ class Commands:
     LOGICAL_OPERATIONS = 'LOGICAL_OPERATION' #logical operations AND, OR, NOT, XOR using values from registers
     #done
     STORE = 'STORE' #stores value in register
-    #done unless more parameters needed
-    PRINT = 'PRINT' #print value or use parameters to print preset values for output and debugging
+    #done
+    PRINT = 'PRINT' #print value or use to print preset values for output and debugging
     #done
     COMMENT = 'COMMENT' #ignores the line as comment
     #done
     MARK = 'MARK' #marks a position in the code
     #done
-    IF = 'IF'
+    IF = 'IF' #if statement
     #done
-    WHILE = 'WHILE'
+    WHILE = 'WHILE' #while loop
     #done
-    FOR = 'FOR'
+    FOR = 'FOR' #for loop
     #done
-    LOOP_END = 'LOOP_END'
-
-    DECIMAL_CONVERT = 'BINARY_CONVERT'
+    LOOP_END = 'LOOP_END' #used to show the end of a loop
+    #done
+    DECIMAL_CONVERT = 'DECIMAL_CONVERT' #converts decimal into binary or hexadecimal
 
 class VMPython:
     def execute():
 
-        Registers = {'COMPAREFLAG': 0, 'LOGIC_FLAG': False, 'BINARY_FLAG': 0, 'HEX_FLAG': 0}  # Initialize flags for usage
+        Registers = {'COMPAREFLAG': 0, 'LOGIC_FLAG': False, 'BINARY_FLAG': "", 'HEXADECIMAL_FLAG': ""}  # Initialize flags for usage
         Markers = {}  # To store marked positions for jumps
         LoopStack = []  # Stack for loop/if contexts
 
@@ -372,30 +372,21 @@ class VMPython:
                         # done
                         LoopStack.pop()
                         ip += 1
-            elif instruction_name == 'DECIMAL_COVERT':
-                # DECIMAL_CONVERT <register> <type> <target_register>
-                val = instruction[1]
+            elif instruction_name == Commands.DECIMAL_CONVERT:
+                # DECIMAL_CONVERT <register> <type>
+                val = eval_operand(instruction[1])
                 target_type = str(instruction[2]).upper()
-                if target_type.upper == 'BINARY':
-                    try:
-                        int_val = int(val)
-                        binary = bin(int_val)
-                        Registers.update({'BINARY_FLAG': binary})
-                    except:
-                        # if conversion fails, store error message or original value
-                        print("ERROR: Cannot convert to binary")
-                
-                elif target_type.upper == 'HEXADECIMAL':
-                    try:
-                        int_val = int(val)
-                        hexadecimal = hex(int_val)
-                        Registers.update({'HEX_FLAG': hexadecimal})
-                    except:
-                        print("ERROR: Cannot convert to hexadecimal")
-                else:
-                    # unsupported target type
-                    print("ERROR: Cannot convert to unknown type")
-
+                if target_type.upper() == "BINARY":
+                    binary = bin(int(val))
+                    Registers.update({'BINARY_FLAG': binary})
+                    ip += 1
+                elif target_type.upper() == "HEXADECIMAL":
+                    hexadecimal = hex(int(val))
+                    Registers.update({'HEXADECIMAL_FLAG': hexadecimal})
+                    ip += 1
+                    
+                    
             else:
-                # unknown instruction: skip
+                # unknown instruction: skip or raise error
+                print(f"WARNING: Unknown instruction {instruction_name} at ip {ip+1}")
                 ip += 1
