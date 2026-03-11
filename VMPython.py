@@ -1,7 +1,6 @@
 from sqlite3 import Binary
 
 from ByteCodeReader import Reader
-import Library
 
 bytecode = Reader.read_file_lines('ByteCode.txt') #used for reading bytecode file
 output = Reader.find_in_nested_list(bytecode) #used for listing positions of values in bytecode
@@ -384,7 +383,6 @@ class VMPython:
                     hexadecimal = hex(int(val))
                     Registers.update({'HEXADECIMAL_FLAG': hexadecimal})
                     ip += 1
-                    
                     
             else:
                 # unknown instruction: skip or raise error
