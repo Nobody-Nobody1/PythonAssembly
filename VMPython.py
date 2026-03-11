@@ -374,24 +374,25 @@ class VMPython:
                 # DECIMAL_CONVERT <register> <type>
                 reg = instruction[1]
                 target_type = str(instruction[2]).upper()
+                target_reg = instruction[3]
                 val = Registers.get(reg)
                 if target_type.upper == 'BINARY':
                     try:
                         int_val = int(val)
-                        Registers.update({reg: bin(int_val)})
+                        Registers.update({target_reg: bin(int_val)})
                     except:
                         # if conversion fails, store error message or original value
-                        Registers[reg] = "ERROR: Cannot convert {} to binary".format(val)
+                        print("ERROR: Cannot convert to binary")
                 
                 elif target_type.upper == 'HEX':
                     try:
                         int_val = int(val)
                         Registers.update({reg: hex(int_val)})
                     except:
-                        Registers[reg] = "ERROR: Cannot convert {} to hexadecimal".format(val)
+                        print("ERROR: Cannot convert to hexadecimal")
                 else:
                     # unsupported target type
-                    Registers[reg] = "ERROR: Unsupported target type {}".format(target_type)
+                    print("ERROR: Cannot convert to unknown type")
 
             else:
                 # unknown instruction: skip
