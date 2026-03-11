@@ -44,7 +44,7 @@ class Commands:
 class VMPython:
     def execute():
 
-        Registers = {'CompareFlag': 0, 'LOGIC_FLAG': False}  # Initialize flags for usage
+        Registers = {'CompareFlag': 0, 'LOGIC_FLAG': False, 'BINARY_FLAG': '', 'HEX_FLAG': ''}  # Initialize flags for usage
         Markers = {}  # To store marked positions for jumps
         LoopStack = []  # Stack for loop/if contexts
 
@@ -371,14 +371,13 @@ class VMPython:
                         LoopStack.pop()
                         ip += 1
             elif instruction_name == 'DECIMAL_COVERT':
-                # DECIMAL_CONVERT <register> <type>
-                reg = instruction[1]
+                # DECIMAL_CONVERT <register> <type> <target_register>
+                val = instruction[1]
                 target_type = str(instruction[2]).upper()
-                target_reg = instruction[3]
-                val = Registers.get(reg)
                 if target_type.upper == 'BINARY':
                     try:
                         int_val = int(val)
+                        target_reg = 'BINARY_FLAG'  # store in a special register for access
                         Registers.update({target_reg: bin(int_val)})
                     except:
                         # if conversion fails, store error message or original value
@@ -386,8 +385,9 @@ class VMPython:
                 
                 elif target_type.upper == 'HEX':
                     try:
+                        target_reg = 'HEX_FLAG'  # store in a special register for access
                         int_val = int(val)
-                        Registers.update({reg: hex(int_val)})
+                        Registers.update({target_reg: hex(int_val)})
                     except:
                         print("ERROR: Cannot convert to hexadecimal")
                 else:
