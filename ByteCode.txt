@@ -4,4 +4,5 @@ store step 1
 for i start end step
 print i
 loop_end
-binary
+store R1 10
+decimal_convert R1 binary

@@ -39,11 +39,7 @@ class Commands:
     #done
     LOOP_END = 'LOOP_END'
 
-    BINARY = 'BINARY'
-
-    HEXADECIMAL = 'HEXADECIMAL'
-
-    OCTAL = 'OCTAL'
+    DECIMAL_CONVERT = 'BINARY_CONVERT'
 
 class VMPython:
     def execute():
@@ -374,9 +370,28 @@ class VMPython:
                         # done
                         LoopStack.pop()
                         ip += 1
-            elif instruction == Commands.BINARY:
-                print("hello")
-                ip += 1
+            elif instruction_name == 'DECIMAL_COVERT':
+                # DECIMAL_CONVERT <register> <type>
+                reg = instruction[1]
+                target_type = str(instruction[2]).upper()
+                val = Registers.get(reg)
+                if target_type.upper == 'BINARY':
+                    try:
+                        int_val = int(val)
+                        Registers[reg] = bin(int_val)
+                    except:
+                        # if conversion fails, store error message or original value
+                        Registers[reg] = "ERROR: Cannot convert {} to binary".format(val)
+                
+                elif target_type.upper == 'HEX':
+                    try:
+                        int_val = int(val)
+                        Registers[reg] = hex(int_val)
+                    except:
+                        Registers[reg] = "ERROR: Cannot convert {} to hexadecimal".format(val)
+                else:
+                    # unsupported target type
+                    Registers[reg] = "ERROR: Unsupported target type {}".format(target_type)
 
             else:
                 # unknown instruction: skip
