@@ -1,4 +1,5 @@
 from ByteCodeReader import Reader
+import Library
 
 bytecode = Reader.read_file_lines('ByteCode.txt') #used for reading bytecode file
 output = Reader.find_in_nested_list(bytecode) #used for listing positions of values in bytecode
@@ -38,10 +39,12 @@ class Commands:
     #done
     LOOP_END = 'LOOP_END'
 
-    FUNCTION = 'FUNCTION' #define a function with parameters
+    BINARY = 'BINARY'
 
-    CALL = 'CALL' #call a defined function with arguments
-    
+    HEXADECIMAL = 'HEXADECIMAL'
+
+    OCTAL = 'OCTAL'
+
 class VMPython:
     def execute():
 
@@ -371,6 +374,9 @@ class VMPython:
                         # done
                         LoopStack.pop()
                         ip += 1
+            elif instruction == Commands.BINARY:
+                print("hello")
+                ip += 1
 
             else:
                 # unknown instruction: skip

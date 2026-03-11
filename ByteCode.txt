@@ -4,3 +4,4 @@ store step 1
 for i start end step
 print i
 loop_end
+binary
