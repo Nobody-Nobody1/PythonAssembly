@@ -11,7 +11,7 @@
            "console": "integratedTerminal"
        },
          {
-              "name": "Python: Server",
+              "name": "Python: Web",
               "type": "debugpy",
               "request": "launch",
               "program": "${workspaceFolder}/Web.py",
