@@ -1,5 +1,3 @@
-from sqlite3 import Binary
-
 from ByteCodeReader import Reader
 
 bytecode = Reader.read_file_lines('ByteCode.txt') #used for reading bytecode file
@@ -383,8 +381,6 @@ class VMPython:
                     hexadecimal = hex(int(val))
                     Registers.update({'HEXADECIMAL_FLAG': hexadecimal})
                     ip += 1
-                    
+
             else:
-                # unknown instruction: skip or raise error
-                print(f"WARNING: Unknown instruction {instruction_name} at ip {ip+1}")
-                ip += 1
+                print(f"error at line {ip+1}")
