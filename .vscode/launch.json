@@ -7,7 +7,7 @@
            "name": "Python: VmExecuter",
            "type": "debugpy",
            "request": "launch",
-           "program": "${workspaceFolder}/VmExecuter.py",
+           "program": "${workspaceFolder}/src/vmexecuter.py",
            "console": "integratedTerminal"
        },
          {
@@ -25,10 +25,10 @@
               "console": "integratedTerminal"
          },
          {
-              "name": "Python: TKinter",
+              "name": "Python: PythonAssembly IDE",
               "type": "debugpy",
               "request": "launch",
-              "program": "${workspaceFolder}/Tkinter.py",
+              "program": "${workspaceFolder}/vm_gui.py",
               "console": "integratedTerminal"
          }
    ]
