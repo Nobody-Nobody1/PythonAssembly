@@ -4,7 +4,7 @@
     
     
        {
-           "name": "Python: VmExecuter",
+           "name": "Python: PythonAssembly Terminal Output",
            "type": "debugpy",
            "request": "launch",
            "program": "${workspaceFolder}/src/vmexecuter.py",
@@ -28,7 +28,7 @@
               "name": "Python: PythonAssembly IDE",
               "type": "debugpy",
               "request": "launch",
-              "program": "${workspaceFolder}/vm_gui.py",
+              "program": "${workspaceFolder}/vm_ide.py",
               "console": "integratedTerminal"
          }
    ]
