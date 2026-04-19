@@ -11,21 +11,14 @@
            "console": "integratedTerminal"
        },
          {
-              "name": "Python: Web",
+              "name": "Python: PythonAssembly Web IDE",
               "type": "debugpy",
               "request": "launch",
-              "program": "${workspaceFolder}/web/Web.py",
+              "program": "${workspaceFolder}/vm_web.py",
               "console": "integratedTerminal"
          },
          {
-              "name": "Python: Current File",
-              "type": "debugpy",
-              "request": "launch",
-              "program": "${file}",
-              "console": "integratedTerminal"
-         },
-         {
-              "name": "Python: PythonAssembly IDE",
+              "name": "Python: PythonAssembly Desktop IDE",
               "type": "debugpy",
               "request": "launch",
               "program": "${workspaceFolder}/vm_ide.py",

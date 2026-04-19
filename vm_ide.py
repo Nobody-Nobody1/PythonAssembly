@@ -11,7 +11,7 @@ except ImportError:
 class BytecodeIDE:
     def __init__(self, root):
         self.root = root
-        self.root.title("Bytecode IDE")
+        self.root.title("PythonAssembly IDE")
 
         self.current_file = None
 

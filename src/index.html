@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bytecode Web IDE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f4f4f4;
+        }
+        #editor, #output {
+            width: 100%;
+            height: 250px;
+            padding: 10px;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: white;
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 5px 10px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Bytecode Web IDE</h1>
+
+<input type="file" id="fileInput" style="display:none">
+<button id="uploadBtn">Upload File</button>
+<button id="saveBtn">Save File</button>
+<button id="runBtn">Run</button>
+
+<textarea id="editor" placeholder="Write or upload your bytecode here..."></textarea>
+
+<h3>Output:</h3>
+<textarea id="output" readonly></textarea>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+
+<script>
+    let pyodide;
+    let currentFilename = "bytecode.txt";
+
+    async function main() {
+        pyodide = await loadPyodide();
+
+        const vmCode = await (await fetch("vmexecuter.py")).text();
+        const readerCode = await (await fetch("ByteCodeReader.py")).text();
+
+        pyodide.FS.writeFile("vmexecuter.py", vmCode);
+        pyodide.FS.writeFile("ByteCodeReader.py", readerCode);
+
+        console.log("Pyodide loaded");
+    }
+
+    main();
+
+    // ---------------- FILE UPLOAD ----------------
+    document.getElementById("uploadBtn").onclick = () => {
+        document.getElementById("fileInput").click();
+    };
+
+    document.getElementById("fileInput").onchange = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        currentFilename = file.name;
+        const text = await file.text();
+        document.getElementById("editor").value = text;
+    };
+
+    // ---------------- SAVE FILE ----------------
+    document.getElementById("saveBtn").onclick = () => {
+        const text = document.getElementById("editor").value;
+
+        const blob = new Blob([text], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = currentFilename;
+        a.click();
+
+        URL.revokeObjectURL(url);
+    };
+
+    // ---------------- RUN PROGRAM ----------------
+    document.getElementById("runBtn").onclick = async () => {
+        const code = document.getElementById("editor").value;
+        const outputBox = document.getElementById("output");
+
+        try {
+            const pythonCode = `
+from vmexecuter import VmExecuter
+lines = """${code.replace(/`/g, "\\`")}""".strip().splitlines()
+bytecode = [line.split() for line in lines]
+vm = VmExecuter()
+vm.execute(bytecode)
+vm.get_output()
+            `;
+
+            const result = await pyodide.runPythonAsync(pythonCode);
+            outputBox.value = result || "(No output)";
+        } catch (err) {
+            outputBox.value = "Error: " + err;
+        }
+    };
+</script>
+
+</body>
+</html>
