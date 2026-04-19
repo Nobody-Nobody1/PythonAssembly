@@ -14,7 +14,7 @@
               "name": "Python: Web",
               "type": "debugpy",
               "request": "launch",
-              "program": "${workspaceFolder}/Web.py",
+              "program": "${workspaceFolder}/web/Web.py",
               "console": "integratedTerminal"
          },
          {

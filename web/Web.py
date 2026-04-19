@@ -15,7 +15,7 @@ class MyServer(BaseHTTPRequestHandler):
         def read_html_file(file_path):
             with open(file_path, 'r') as file:
                 return file.read()
-        self.wfile.write(bytes(read_html_file("index.html"), "utf-8"))
+        self.wfile.write(bytes(read_html_file("web/index.html"), "utf-8"))
 
 if __name__ == "__main__":        
     webServer = HTTPServer((hostName, serverPort), MyServer)

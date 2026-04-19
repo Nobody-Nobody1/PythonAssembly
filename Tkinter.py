@@ -36,12 +36,9 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Error: {e}")
 
+def run_file():
 
-
-
-
-
-def run_file(temp_file_path):
+    temp_file_path = "VmExecuter.py"
     #open file and display its contents``
     
     if not temp_file_path:

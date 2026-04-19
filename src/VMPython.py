@@ -1,4 +1,4 @@
-from ByteCodeReader import Reader
+from src.ByteCodeReader import Reader
 
 bytecode = Reader.read_file_lines('ByteCode.txt') #used for reading bytecode file
 output = Reader.find_in_nested_list(bytecode) #used for listing positions of values in bytecode
