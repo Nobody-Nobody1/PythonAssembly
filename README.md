@@ -159,13 +159,6 @@ ByteCode.txt:
 
 ---
 
-## Extending the VM
-
-- Adding a `GOTO` or conditional jump would be straightforward using `MARK` names and by storing marker positions from `Markers`.
-- The VM currently treats many tokens as strings or ints; if you need richer types (floats, strings with spaces, arrays), update `eval_operand` in `VMPython.py` to parse those types.
-
----
-
 ## Contributing
 
 - Pull requests welcome.
