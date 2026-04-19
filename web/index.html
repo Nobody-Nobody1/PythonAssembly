@@ -17,11 +17,32 @@
 <br>
 
 <!-- Execute button -->
-<button id="executeBtn">Execute Edited File</button>
+<button onclick="RunAndOutput()">Run Code</button>
+<p id="output"></p>
 
 <script>
 const editor = document.getElementById('editor');
-const executeBtn = document.getElementById('executeBtn');
+
+function RunAndOutput() {
+            // Get the text box element
+            const textBox = document.getElementById("editor");
+
+            // Get the current value
+            const value = textBox.value.trim(); // trim removes extra spaces
+
+            // Clear the text box
+            textBox.value = "";
+
+            // Print the value (to page and console)
+            if (value) {
+                document.getElementById("output").textContent = "You entered: " + value;
+                console.log("You entered:", value);
+            } else {
+                document.getElementById("output").textContent = "Text box was empty.";
+                console.warn("Text box was empty.");
+            }
+        }
+
 </script>
 
 </body>

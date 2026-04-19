@@ -6,36 +6,6 @@ import os
 import shutil
 import tempfile
 
-def get_temp_copy(filename):
-    # Returns the path to a temporary copy of a bundled file.
-    # Determine base path (inside _MEIPASS when frozen)
-    #todo: make 2 versions of this function, one for when the file is bundled and one for when it is not, and use the appropriate one based on the environment
-
-    if getattr(sys, 'frozen', False):
-        base_path = sys._MEIPASS  # Temporary extraction folder for PyInstaller
-    else:
-        base_path = os.path.dirname(os.path.abspath(__file__))
-
-    source_path = os.path.join(base_path, filename)
-
-    if not os.path.exists(source_path):
-        raise FileNotFoundError(f"Bundled file '{filename}' not found.")
-
-    # Create a temp copy
-    temp_dir = tempfile.mkdtemp()
-    temp_path = os.path.join(temp_dir, filename)
-    shutil.copy2(source_path, temp_path)
-
-    return temp_path
-
-if __name__ == "__main__":
-    try:
-        temp_file_path = get_temp_copy("VmExecuter.py")
-        print(f"Temporary copy created at: {temp_file_path}")
-        # You can now run or import this file if needed
-    except Exception as e:
-        print(f"Error: {e}")
-
 def run_file():
 
     temp_file_path = "VmExecuter.py"
@@ -71,6 +41,37 @@ def run_file():
 
     except Exception as e:
         messagebox.showerror("Execution Error", str(e))
+
+def get_temp_copy(filename):
+    # Returns the path to a temporary copy of a bundled file.
+    # Determine base path (inside _MEIPASS when frozen)
+    #todo: make 2 versions of this function, one for when the file is bundled and one for when it is not, and use the appropriate one based on the environment
+
+    if getattr(sys, 'frozen', False):
+        base_path = sys._MEIPASS  # Temporary extraction folder for PyInstaller
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+
+    source_path = os.path.join(base_path, filename)
+
+    if not os.path.exists(source_path):
+        raise FileNotFoundError(f"Bundled file '{filename}' not found.")
+
+    # Create a temp copy
+    temp_dir = tempfile.mkdtemp()
+    temp_path = os.path.join(temp_dir, filename)
+    shutil.copy2(source_path, temp_path)
+
+    return temp_path
+
+if __name__ == "__main__":
+    try:
+        temp_file_path = get_temp_copy("VmExecuter.py")
+        print(f"Temporary copy created at: {temp_file_path}")
+        # need to add excution code here so temp copy is always run
+            
+    except Exception as e:
+        print(f"Error: {e}")
 
 def show_file():
    file = 'ByteCode.txt'
